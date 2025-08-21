@@ -11,12 +11,23 @@ FONT_NAME = "Courier"
 WORK_MIN = 25
 SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
+REPS = 0
 
 # ---------------------------- TIMER RESET ------------------------------- #
+def reset_timer():
+    pass
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 def timer_count_down():
-    count_down(5, lambda : alarm_count_down(5 * 60))
+    global REPS
+    REPS += 1
+
+    if REPS % 2 == 1:
+        count_down(5, lambda : alarm_count_down(WORK_MIN * 60))
+    elif REPS == 8:
+        count_down(5, lambda : alarm_count_down(LONG_BREAK_MIN * 60))
+    else:
+        count_down(5, lambda: alarm_count_down(SHORT_BREAK_MIN * 60))
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
 def count_down(count, on_finish=None):
@@ -29,18 +40,22 @@ def count_down(count, on_finish=None):
             on_finish()
 
 def alarm_count_down(count):
-
     count_min = math.floor(count / 60)
     count_sec = count % 60
 
     if count_sec < 10:
         count_sec = f"0{count_sec}"
+    if count_min < 10:
+        count_min = f"0{count_min}"
 
-    canvas.itemconfig(alarm_timer, text=f"0{count_min}:{count_sec}")
+    canvas.itemconfig(alarm_timer, text=f"{count_min}:{count_sec}")
     if count > 0:
-        windows.after(1000, alarm_count_down, count-1)
-
-
+        windows.after(1000, alarm_count_down, count - 1)
+    else:
+        if REPS < 8:
+            timer_count_down()
+        else:
+            canvas.itemconfig(alarm_timer, text="Done 🎉")
 
 # ---------------------------- UI SETUP ------------------------------- #
 windows = Tk()
@@ -74,7 +89,7 @@ button_frame.place(relx=0.46, y=300, anchor="center")
 
 pause_button = Button(button_frame, image=pause_img, bg="white",
                       activebackground="white", borderwidth=0,
-                      command=lambda: print("Pause"), highlightthickness=0)
+                      command=reset_timer, highlightthickness=0)
 pause_button.image = pause_img
 pause_button.pack(side="left", padx=10)
 
