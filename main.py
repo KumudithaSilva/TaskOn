@@ -1,6 +1,7 @@
 import math
 from tkinter import *
 from tkinter import ttk
+import pygame
 
 # ---------------------------- CONSTANTS ------------------------------- #
 PINK = "#e2979c"
@@ -13,6 +14,7 @@ SHORT_BREAK_MIN = 5
 LONG_BREAK_MIN = 20
 REPS = 0
 
+pygame.mixer.init()
 # ---------------------------- TIMER RESET ------------------------------- #
 def reset_timer():
     pass
@@ -24,10 +26,16 @@ def timer_count_down():
 
     if REPS % 2 == 1:
         count_down(5, lambda : alarm_count_down(WORK_MIN * 60))
+        canvas.itemconfig(sub_logo, image=work_img)
+        canvas.coords(sub_logo, 100, 100)
     elif REPS == 8:
         count_down(5, lambda : alarm_count_down(LONG_BREAK_MIN * 60))
+        canvas.itemconfig(sub_logo, image=long_break_img)
+        canvas.coords(sub_logo, 100, 100)
     else:
         count_down(5, lambda: alarm_count_down(SHORT_BREAK_MIN * 60))
+        canvas.itemconfig(sub_logo, image=short_break_img)
+        canvas.coords(sub_logo, 100, 100)
 
 # ---------------------------- COUNTDOWN MECHANISM ------------------------------- #
 def count_down(count, on_finish=None):
@@ -36,6 +44,9 @@ def count_down(count, on_finish=None):
         windows.after(1000, count_down, count-1, on_finish)
     else:
         canvas.itemconfig(count_down_timer, text="")
+        pygame.mixer.music.load("audio/beep.wav")
+        pygame.mixer.music.play()
+
         if on_finish:
             on_finish()
 
@@ -62,7 +73,7 @@ windows = Tk()
 windows.title("TaskOn")
 windows.geometry("250x350")
 windows.iconbitmap("images/growing-seed.ico")
-windows.config(padx=5, pady=5, bg="white")
+windows.config(padx=5, pady=5, bg="#fdfdfd")
 windows.resizable(False, False)
 
 
@@ -71,40 +82,55 @@ oak_img = PhotoImage(file="images/growing-seed.png")
 play_img = PhotoImage(file="images/play.png")
 pause_img = PhotoImage(file="images/pause.png")
 checkbox = PhotoImage(file="images/checkbox.png")
+work_img = PhotoImage(file="images/studying.png")
+short_break_img = PhotoImage(file="images/short_break.png")
+long_break_img = PhotoImage(file="images/long_break.png")
 
 
-canvas = Canvas(windows, width=200, height=220, bg="white", highlightthickness=0)
+canvas = Canvas(windows, width=200, height=220, bg="#fdfdfd", highlightthickness=0)
 canvas.place(relx=0.5, y=15, anchor="n")
 
-canvas.create_image(100, 100, image=moon_img)
-canvas.create_image(110, 100, image=oak_img)
+main_logo = canvas.create_image(100, 100, image=moon_img)
+sub_logo = canvas.create_image(110, 100, image=oak_img)
 
-count_down_timer = canvas.create_text(97, 100, text="", fill="white", font=(FONT_NAME, 40, "bold"))
+count_down_timer = canvas.create_text(97, 100, text="", fill="#fdfdfd", font=(FONT_NAME, 40, "bold"))
 alarm_timer = canvas.create_text(97, 200, text="", fill="black", font=(FONT_NAME, 25, "bold"))
 
 
-button_frame = Frame(windows, bg="white")
+button_frame = Frame(windows, bg="#fdfdfd")
 button_frame.place(relx=0.46, y=300, anchor="center")
 
 
-pause_button = Button(button_frame, image=pause_img, bg="white",
-                      activebackground="white", borderwidth=0,
+pause_button = Button(button_frame, image=pause_img, bg="#fdfdfd",
+                      activebackground="#fdfdfd", borderwidth=0,
                       command=reset_timer, highlightthickness=0)
 pause_button.image = pause_img
 pause_button.pack(side="left", padx=10)
 
-play_button = Button(button_frame, image=play_img, bg="white",
-                     activebackground="white", borderwidth=0,
+play_button = Button(button_frame, image=play_img, bg="#fdfdfd",
+                     activebackground="#fdfdfd", borderwidth=0,
                      command=timer_count_down, highlightthickness=0)
 play_button.image = play_img
 play_button.pack(side="left")
 
 
-label_frame = Frame(windows, bg="white")
-label_frame.place(relx=0.49, y =250, anchor="center")
+label_frame = Frame(windows, bg="#fdfdfd")
+label_frame.place(relx=0.49, y =255, anchor="center")
 
-image_label = Label(label_frame, image=checkbox,bg="white", highlightthickness=0)
+image_label = Label(label_frame, image=checkbox,bg="#fdfdfd", highlightthickness=0)
 image_label.pack(side="left")
+
+image_label1 = Label(label_frame, image=checkbox,bg="#fdfdfd", highlightthickness=0)
+image_label1.pack(side="left")
+
+image_label2 = Label(label_frame, image=checkbox,bg="#fdfdfd", highlightthickness=0)
+image_label2.pack(side="left")
+
+image_label3 = Label(label_frame, image=checkbox,bg="#fdfdfd", highlightthickness=0)
+image_label3.pack(side="left")
+
+image_label4 = Label(label_frame, image=checkbox,bg="#fdfdfd", highlightthickness=0)
+image_label4.pack(side="left")
 
 
 
