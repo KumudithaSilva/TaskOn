@@ -23,6 +23,7 @@ def reset_timer():
     canvas.itemconfig(count_down_timer, text="")
     canvas.itemconfig(alarm_timer, text="")
     canvas.itemconfig(sub_logo, image=oak_img)
+    canvas.coords(sub_logo, 110, 100)
 
     global REPS
     REPS = 0
