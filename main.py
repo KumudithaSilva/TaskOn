@@ -9,15 +9,26 @@ RED = "#e7305b"
 GREEN = "#9bdeac"
 YELLOW = "#f7f5dd"
 FONT_NAME = "Courier"
-WORK_MIN = 25
-SHORT_BREAK_MIN = 5
-LONG_BREAK_MIN = 20
+WORK_MIN = 1
+SHORT_BREAK_MIN = 1
+LONG_BREAK_MIN = 1
 REPS = 0
+timer = None
+
 
 pygame.mixer.init()
 # ---------------------------- TIMER RESET ------------------------------- #
 def reset_timer():
-    pass
+    windows.after_cancel(timer)
+    canvas.itemconfig(count_down_timer, text="")
+    canvas.itemconfig(alarm_timer, text="")
+    canvas.itemconfig(sub_logo, image=oak_img)
+
+    global REPS
+    REPS = 0
+
+    for widget in label_frame.winfo_children():
+        widget.destroy()
 
 # ---------------------------- TIMER MECHANISM ------------------------------- #
 def timer_count_down():
@@ -28,12 +39,14 @@ def timer_count_down():
         count_down(5, lambda : alarm_count_down(WORK_MIN * 60))
         canvas.itemconfig(sub_logo, image=work_img)
         canvas.coords(sub_logo, 100, 100)
+
     elif REPS == 8:
-        count_down(5, lambda : alarm_count_down(LONG_BREAK_MIN * 60))
+        count_down(0, lambda : alarm_count_down(LONG_BREAK_MIN * 60))
         canvas.itemconfig(sub_logo, image=long_break_img)
         canvas.coords(sub_logo, 100, 100)
+
     else:
-        count_down(5, lambda: alarm_count_down(SHORT_BREAK_MIN * 60))
+        count_down(0, lambda: alarm_count_down(SHORT_BREAK_MIN * 60))
         canvas.itemconfig(sub_logo, image=short_break_img)
         canvas.coords(sub_logo, 100, 100)
 
@@ -49,6 +62,9 @@ def count_down(count, on_finish=None):
 
         if on_finish:
             on_finish()
+            if REPS % 2 != 1:
+                img = Label(label_frame, image=checkbox, bg="#fdfdfd", highlightthickness=0)
+                img.pack(side="left")
 
 def alarm_count_down(count):
     count_min = math.floor(count / 60)
@@ -61,12 +77,13 @@ def alarm_count_down(count):
 
     canvas.itemconfig(alarm_timer, text=f"{count_min}:{count_sec}")
     if count > 0:
-        windows.after(1000, alarm_count_down, count - 1)
+        global timer
+        timer = windows.after(1000, alarm_count_down, count - 1)
     else:
         if REPS < 8:
             timer_count_down()
         else:
-            canvas.itemconfig(alarm_timer, text="Done 🎉")
+            canvas.itemconfig(alarm_timer, text="Done 🎉", fill="black", font=(FONT_NAME, 25, "bold"))
 
 # ---------------------------- UI SETUP ------------------------------- #
 windows = Tk()
@@ -90,6 +107,9 @@ long_break_img = PhotoImage(file="images/long_break.png")
 canvas = Canvas(windows, width=200, height=220, bg="#fdfdfd", highlightthickness=0)
 canvas.place(relx=0.5, y=15, anchor="n")
 
+label_frame = Frame(windows, bg="#fdfdfd")
+label_frame.place(relx=0.49, y =255, anchor="center")
+
 main_logo = canvas.create_image(100, 100, image=moon_img)
 sub_logo = canvas.create_image(110, 100, image=oak_img)
 
@@ -112,28 +132,6 @@ play_button = Button(button_frame, image=play_img, bg="#fdfdfd",
                      command=timer_count_down, highlightthickness=0)
 play_button.image = play_img
 play_button.pack(side="left")
-
-
-label_frame = Frame(windows, bg="#fdfdfd")
-label_frame.place(relx=0.49, y =255, anchor="center")
-
-image_label = Label(label_frame, image=checkbox,bg="#fdfdfd", highlightthickness=0)
-image_label.pack(side="left")
-
-image_label1 = Label(label_frame, image=checkbox,bg="#fdfdfd", highlightthickness=0)
-image_label1.pack(side="left")
-
-image_label2 = Label(label_frame, image=checkbox,bg="#fdfdfd", highlightthickness=0)
-image_label2.pack(side="left")
-
-image_label3 = Label(label_frame, image=checkbox,bg="#fdfdfd", highlightthickness=0)
-image_label3.pack(side="left")
-
-image_label4 = Label(label_frame, image=checkbox,bg="#fdfdfd", highlightthickness=0)
-image_label4.pack(side="left")
-
-
-
 
 
 
