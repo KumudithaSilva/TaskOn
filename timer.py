@@ -52,7 +52,6 @@ class Timer:
             # Schedule next tick after 1 second
             self.timer = self.root.after(1000, self._count_down_timer)
         else:
-            print("State Over")
             if self.on_tick:
                 # Trigger tick callback at the end
                 self.on_tick()
