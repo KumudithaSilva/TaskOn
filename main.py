@@ -1,7 +1,6 @@
 from tkinter import Tk
+from app import TaskOnApp
 from resources import ResourceLoader
-from ui import TaskOnUI
-from timer import Timer
 from audio_service import PygameAudionService
 
 
@@ -26,12 +25,8 @@ def main():
         "long_break": loader.load_image("long_break.png"),
     }
 
-    app = TaskOnUI(root, images)
-
-    audio_service = PygameAudionService()
-
-    timer_app = Timer(root, 10, lambda: audio_service.play("beep.wav"))
-    timer_app.start_tick()
+    audio = PygameAudionService()
+    app = TaskOnApp(root, images, audio)
 
     root.mainloop()
 
