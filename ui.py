@@ -17,7 +17,7 @@ class TaskOnUI:
         clear_checkmarks(): Clears all checkbox labels from the UI.
     """
 
-    def __init__(self, root, images):
+    def __init__(self, root, images, start_callback, reset_callback):
         self.root = root
         self.images = images
 
@@ -57,7 +57,7 @@ class TaskOnUI:
         self.play_button = Button(
             button_frame, image=images["play"], bg="#fdfdfd",
             activebackground="#fdfdfd", borderwidth=0,
-            highlightthickness=0
+            highlightthickness=0, command=start_callback
         )
         self.play_button.pack(side="left", padx=10)
 
@@ -65,7 +65,7 @@ class TaskOnUI:
         self.reset_button = Button(
             button_frame, image=images["pause"], bg="#fdfdfd",
             activebackground="#fdfdfd", borderwidth=0,
-            highlightthickness=0
+            highlightthickness=0, command=reset_callback
         )
         self.reset_button.pack(side="left")
 
