@@ -5,7 +5,7 @@ COUNTER_SECOND = 5
 class Timer:
     """Handles countdown logic without UI specifics."""
 
-    def __init__(self, root, on_tick, on_finish):
+    def __init__(self, root, on_tick, on_tick_alarm, on_finish):
         """
         Initialize the Timer.
 
@@ -19,6 +19,7 @@ class Timer:
         self.counter_seconds = COUNTER_SECOND
         self.on_tick = on_tick
         self.on_finish = on_finish
+        self.on_tick_alarm = on_tick_alarm
         self.timer = None
         self.remaining = 0
 
@@ -32,7 +33,7 @@ class Timer:
         """Start simple second-based countdown timer."""
         self._count_down_tick()
 
-    def _count_down_tick(self, first_call=False):
+    def _count_down_tick(self):
         """Internal method: simple countdown in seconds."""
         if self.counter_seconds > 0:
             print(self.counter_seconds)
@@ -57,12 +58,20 @@ class Timer:
 
         print(f"[TIMER] {count_min:02d}:{count_sec:02d} remaining")
 
+        if self.on_tick_alarm:
+            if count_sec < 10:
+                count_sec = f"0{count_sec}"
+            if count_min < 10:
+                count_min = f"0{count_min}"
+            self.on_tick_alarm(count_min, count_sec)
+
         if self.remaining > 0:
             self.remaining -= 1
             # Schedule next tick after 1 second
             self.timer = self.root.after(1000, self._count_down_timer)
         else:
             print("[DONE] Main timer finished!")
+
             if self.on_finish:
                 # Trigger tick callback at the end
                 self.on_finish()

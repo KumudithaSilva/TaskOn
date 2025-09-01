@@ -26,7 +26,7 @@ def main():
     }
 
     audio = PygameAudionService()
-    app = TaskOnApp(root, images, audio)
+    TaskOnApp(root, images, audio)
 
     root.mainloop()
 
