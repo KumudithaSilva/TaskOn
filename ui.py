@@ -71,16 +71,21 @@ class TaskOnUI:
 
     def update_count_down_timer(self, secs):
         """Update the countdown timer display on the canvas."""
-        self.canvas.itemconfig(self.count_down_timer, text=f"{secs}")
+        self.canvas.itemconfig(self.count_down_timer, text=f"{secs}", font=("Courier", 40, "bold"))
 
     def update_alarm_timer(self, mins, secs):
         """Update the alarm timer display on the canvas."""
-        self.canvas.itemconfig(self.alarm_timer, text=f"{mins}:{secs}")
+        self.canvas.itemconfig(self.alarm_timer, text=f"{mins}:{secs}", font=("Courier", 25, "bold"))
 
     def update_logo(self, image):
         """Update the sub-logo image."""
         self.canvas.itemconfig(self.sub_logo, image=image)
         self.canvas.coords(self.sub_logo, 100, 100)
+
+    def update_sub_logo(self, image):
+        """Update the sub-logo image."""
+        self.canvas.itemconfig(self.sub_logo, image=image)
+        self.canvas.coords(self.sub_logo, 110, 100)
 
     def add_checkmark(self, checkbox_img):
         """Add a checkbox image to the label frame."""
@@ -89,7 +94,20 @@ class TaskOnUI:
             bg="#fdfdfd", highlightthickness=0
         ).pack(side="left")
 
+    def end_alarm_timer(self):
+        """Clear the alarm timer display."""
+        self.canvas.itemconfig(self.alarm_timer, text="Congratulations 🎉", font=("Courier", 12, "bold"))
+
+    def clear_tick_timer(self):
+        """Clear the alarm timer display."""
+        self.canvas.itemconfig(self.count_down_timer, text="")
+
+    def clear_alarm_timer(self):
+        """Clear the alarm timer display."""
+        self.canvas.itemconfig(self.alarm_timer, text="")
+
     def clear_checkmarks(self):
         """Remove all checkbox images from the label frame."""
         for widget in self.label_frame.winfo_children():
             widget.destroy()
+
