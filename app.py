@@ -3,10 +3,10 @@ from audio_service import IAudioService
 from ui import TaskOnUI
 
 class TaskOnApp:
-    WORK_MIN = 7
+    WORK_MIN = 20
     SHORT_BREAK_MIN = 5
-    LONG_BREAK_MIN = 3
-    WORK_REPS = 3
+    LONG_BREAK_MIN = 20
+    WORK_REPS = 5
 
     def __init__(self, root, images, audio_service: IAudioService):
         self.root = root
