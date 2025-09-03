@@ -3,25 +3,31 @@ from tkinter import Canvas, Frame, Button, Label
 
 class TaskOnUI:
     """
-    A class to manage and display task-related UI components using Tkinter.
+    Manage and display task-related UI components using Tkinter.
 
     Attributes:
         root (Tk): The main application window.
-        images (dict): A dictionary containing Tkinter PhotoImage objects.
-
-    Methods:
-        update_count_down_timer(secs): Updates the main countdown timer text.
-        update_alarm_timer(mins, secs): Updates the alarm timer display.
-        update_logo(image): Changes the sub-logo image.
-        add_checkmark(checkbox_img): Adds a checkbox image label to the UI.
-        clear_checkmarks(): Clears all checkbox labels from the UI.
+        images (dict): Tkinter PhotoImage objects for UI elements.
+        canvas (Canvas): Main drawing area for timers and logos.
+        label_frame (Frame): Frame for checkmark labels.
+        play_button (Button): Button to start the task.
+        reset_button (Button): Button to reset the task.
     """
 
     def __init__(self, root, images, start_callback, reset_callback):
+        """
+        Initialize the TaskOn UI.
+
+        Args:
+            root (Tk): Main application window.
+            images (dict): Dictionary of Tkinter PhotoImage objects.
+            start_callback (callable): Function called when play is pressed.
+            reset_callback (callable): Function called when reset is pressed.
+        """
         self.root = root
         self.images = images
 
-        # Canvas for main display
+        # Canvas for main display (logos and timers)
         self.canvas = Canvas(
             root,
             width=200,
@@ -35,11 +41,11 @@ class TaskOnUI:
         self.label_frame = Frame(root, bg="#fdfdfd")
         self.label_frame.place(relx=0.49, y=255, anchor="center")
 
-        # Initial logo images
+        # Initial logos
         self.main_logo = self.canvas.create_image(100, 100, image=images["moon"])
         self.sub_logo = self.canvas.create_image(110, 100, image=images["oak"])
 
-        # Countdown and alarm timers
+        # Timers (countdown and alarm)
         self.count_down_timer = self.canvas.create_text(
             97, 100, text="", fill="#fdfdfd",
             font=("Courier", 40, "bold")
@@ -69,45 +75,68 @@ class TaskOnUI:
         )
         self.reset_button.pack(side="left")
 
+    # ==========================
+    # Update Methods
+    # ==========================
+
     def update_count_down_timer(self, secs):
         """Update the countdown timer display on the canvas."""
-        self.canvas.itemconfig(self.count_down_timer, text=f"{secs}", font=("Courier", 40, "bold"))
+        self.canvas.itemconfig(
+            self.count_down_timer,
+            text=f"{secs}",
+            font=("Courier", 40, "bold")
+        )
 
     def update_alarm_timer(self, mins, secs):
         """Update the alarm timer display on the canvas."""
-        self.canvas.itemconfig(self.alarm_timer, text=f"{mins}:{secs}", font=("Courier", 25, "bold"))
+        self.canvas.itemconfig(
+            self.alarm_timer,
+            text=f"{mins}:{secs}",
+            font=("Courier", 25, "bold")
+        )
 
     def update_logo(self, image):
-        """Update the sub-logo image."""
+        """Update the main logo image."""
         self.canvas.itemconfig(self.sub_logo, image=image)
         self.canvas.coords(self.sub_logo, 100, 100)
 
     def update_sub_logo(self, image):
-        """Update the sub-logo image."""
+        """Update the sub-logo image (slightly offset position)."""
         self.canvas.itemconfig(self.sub_logo, image=image)
         self.canvas.coords(self.sub_logo, 110, 100)
 
+    # ==========================
+    # Checkmark Methods
+    # ==========================
+
     def add_checkmark(self, checkbox_img):
-        """Add a checkbox image to the label frame."""
+        """Add a checkmark image to the label frame."""
         Label(
             self.label_frame, image=checkbox_img,
             bg="#fdfdfd", highlightthickness=0
         ).pack(side="left")
 
+    def clear_checkmarks(self):
+        """Remove all checkmark images from the label frame."""
+        for widget in self.label_frame.winfo_children():
+            widget.destroy()
+
+    # ==========================
+    # Clear/Reset Methods
+    # ==========================
+
     def end_alarm_timer(self):
-        """Clear the alarm timer display."""
-        self.canvas.itemconfig(self.alarm_timer, text="Congratulations 🎉", font=("Courier", 12, "bold"))
+        """Display a congratulatory message when the alarm timer ends."""
+        self.canvas.itemconfig(
+            self.alarm_timer,
+            text="Congratulations 🎉",
+            font=("Courier", 12, "bold")
+        )
 
     def clear_tick_timer(self):
-        """Clear the alarm timer display."""
+        """Clear the countdown timer display."""
         self.canvas.itemconfig(self.count_down_timer, text="")
 
     def clear_alarm_timer(self):
         """Clear the alarm timer display."""
         self.canvas.itemconfig(self.alarm_timer, text="")
-
-    def clear_checkmarks(self):
-        """Remove all checkbox images from the label frame."""
-        for widget in self.label_frame.winfo_children():
-            widget.destroy()
-
