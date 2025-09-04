@@ -23,10 +23,12 @@ def main():
     root.geometry("250x350")
     root.config(padx=5, pady=5, bg="#fdfdfd")
     root.resizable(False, False)
-    root.iconbitmap("assets/images/growing-seed.ico")
 
-    # Load all necessary image resources
     loader = ResourceLoader()
+
+    icon_path = loader.get_resource_path("growing-seed.ico")
+    root.iconbitmap(icon_path)
+
     images = {
         "moon": loader.load_image("clock-green.png"),
         "oak": loader.load_image("growing-seed.png"),

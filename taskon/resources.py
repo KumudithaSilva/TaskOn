@@ -39,3 +39,15 @@ class ResourceLoader:
         """
         path = os.path.join(self.base_path, filename)
         return PhotoImage(file=path) if os.path.exists(path) else None
+
+    def get_resource_path(self, filename: str) -> str:
+        """
+        Get the absolute file path for a resource file.
+
+        Args:
+            filename: Name of the resource file.
+
+        Returns:
+            Absolute path to the resource file.
+        """
+        return os.path.join(self.base_path, filename)
