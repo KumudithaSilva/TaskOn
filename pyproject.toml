@@ -19,15 +19,14 @@ dependencies = [
 
 [tool.setuptools]
 py-modules = ["main"]
+include-package-data = true
 
 [tool.setuptools.packages.find]
 where = ["taskon"]
-
-[tool.setuptools.package-data]
-"" = ["assets/**/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 
 [project.scripts]
 taskon = "taskon.app:main"
+
