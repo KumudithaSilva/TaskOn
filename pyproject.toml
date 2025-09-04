@@ -29,5 +29,5 @@ taskon = ["assets/**/*"]
 testpaths = ["tests"]
 
 [project.scripts]
-taskon = "main:main"
+taskon = "taskon.main:main"
 
