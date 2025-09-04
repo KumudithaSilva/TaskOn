@@ -20,7 +20,7 @@ class ResourceLoader:
         """
         if base_path is None:
             # Absolute path relative to this file
-            base_path = os.path.join(os.path.dirname(__file__), "../assets/images")
+            base_path = os.path.join(os.path.dirname(__file__), "assets/images")
         self.base_path = os.path.abspath(base_path)  # converts to absolute path
 
     # --------------------------
