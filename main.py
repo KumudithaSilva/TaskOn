@@ -23,7 +23,7 @@ def main():
     root.geometry("250x350")
     root.config(padx=5, pady=5, bg="#fdfdfd")
     root.resizable(False, False)
-    root.iconbitmap("assets/images/growing-seed.ico")
+    root.iconbitmap("taskon/assets/images/growing-seed.ico")
 
     # Load all necessary image resources
     loader = ResourceLoader()
