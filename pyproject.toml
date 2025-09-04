@@ -17,8 +17,17 @@ dependencies = [
   "pytest>=7.4.0"
 ]
 
+[tool.setuptools]
+py-modules = ["main"]
+
 [tool.setuptools.packages.find]
 where = ["taskon"]
 
+[tool.setuptools.package-data]
+"" = ["assets/**/*"]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+
+[project.scripts]
+taskon = "taskon.app:main"
