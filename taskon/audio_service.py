@@ -1,4 +1,6 @@
 import os
+import sys
+
 import pygame
 from abc import ABC, abstractmethod
 
@@ -36,7 +38,10 @@ class PygameAudionService(IAudioService):
                        defaults to '../assets/audio/' relative to this file.
         """
         if base_path is None:
-            base_path = os.path.join(os.path.dirname(__file__), "assets/audio")
+            if hasattr(sys, '_MEIPASS'):
+                base_path = os.path.join(sys._MEIPASS, 'assets', 'audio')
+            else:
+                base_path = os.path.join(os.path.dirname(__file__), 'assets/audio')
         self.base_path = os.path.abspath(base_path)
 
         pygame.init()
