@@ -53,8 +53,9 @@ class TaskOnApp:
     # --------------------------
 
     def start(self):
-        """Start a new session if no tick timer is running."""
-        if self.timer.is_tick_timer_running():
+        """Start a new session if no tick timer or main timer is running."""
+        if (self.timer.is_tick_timer_running() or
+                self.timer.is_timer_running()):
             return
 
         session_type = self.task_manager.next_session()

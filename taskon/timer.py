@@ -50,16 +50,16 @@ class Timer:
     # Timer Start / Tick Methods
     # --------------------------
 
+    def start_tick(self):
+        """Start simple second-based countdown timer."""
+        logger.info("[START] Ticking Timer Start")
+        self._count_down_tick()
+
     def start_timer(self, seconds):
         """Start main countdown timer."""
         self.remaining = seconds
         logger.info(f"[START] Main Timer For {seconds}s Start")
         self._count_down_timer()
-
-    def start_tick(self):
-        """Start simple second-based countdown timer."""
-        logger.info("[START] Ticking Timer Start")
-        self._count_down_tick()
 
     def _count_down_tick(self):
         """Internal method: simple countdown in seconds."""
