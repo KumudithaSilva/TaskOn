@@ -112,20 +112,46 @@ pip install -r requirements.txt
 
 ## 🗂️ Project Structure  
 ```bash
-TaskOnApp/ 
-├── main.py              # Entry point (launches the app)
-├── taskon/ 
-│   ├── app.py           # Main TaskOnApp (coordinates everything)
-│   ├── timer.py         # Timer class (countdowns & ticks)
-│   ├── task_manager.py  # Controls session switching & repetition
-│   ├── ui.py            # Tkinter-based UI
-│   ├── audio_service.py # IAudioService interface + pygame implementation
-│   ├── config.py        # Configurable durations & settings
-│   ├── resources.py     # Loads images/icons
-│   └── logger.py        # Centralized logging
-└── assets/ 
-    ├── audio/           # Sound files (beep.wav, congratulations.wav)
-    └── images/          # Icons (play, pause, logos, checkboxes)
+
+TaskOnApp/
+├── taskon/                           # Main application package
+│   ├── __init__.py
+│   ├── main.py                       # Entry point 
+│   ├── app.py                        # App logic coordinator
+│   ├── timer.py                      # Timer logic
+│   ├── task_manager.py               # Pomodoro/task session controller
+│   ├── ui.py                         # Tkinter UI
+│   ├── audio_service.py              # Audio abstraction layer
+│   ├── config.py                     # Configurable durations
+│   ├── resources.py                  # Loads icons/audio
+│   ├── logger.py                     # Centralized logging
+│   └── assets/                       # Static files
+│       ├── audio/                    # .wav, .mp3 files
+│       └── images/                   # .png, .ico files
+│
+├── tests/                            # Unit tests
+│   ├── __init__.py
+│   ├── test_timer.py
+│   └── test_task_manager.py
+│
+├── dist/                                  # Built files (output)
+│   ├── TaskOnApp.exe                      # Windows executable (PyInstaller)
+│   └── taskonapp-0.1.0-py3-none-any.whl   # Python package
+│
+├── build/                                 # PyInstaller build cache
+│   └── ...
+│
+├── .github/                               # GitHub Actions workflows
+│   └── workflows/
+│       └── taskon-tests.yml               # CI/CD (test, Sonar, PyInstaller)
+│
+├── .gitignore                             # Ignore build files, __pycache__, etc.
+├── README.md                              # Project overview, setup, usage
+├── requirements.txt                       # Runtime dependencies (pygame, etc.)
+├── MANIFEST.in                            # Includes assets in Python package
+├── pyproject.toml                         # Modern build system config
+├── TaskOnApp.spec                         # PyInstaller config file
+
 ```
 ---
 
