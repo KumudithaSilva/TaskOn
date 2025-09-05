@@ -23,7 +23,8 @@ packages = ["taskon"]
 include-package-data = true
 
 [tool.setuptools.package-data]
-taskon = ["assets/**/*"]
+"taskon.assets.images" = ["*.png", "*.ico"]
+"taskon.assets.audio" = ["*.mp3", "*.wav"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
