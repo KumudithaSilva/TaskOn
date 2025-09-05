@@ -96,7 +96,7 @@ jobs:
       - name: Upload Windows executable artifact
         uses: actions/upload-artifact@v4
         with:
-          name: TaskOnApp-exe
-          path: dist/TaskOnApp.exe
+          name: TaskOn-exe
+          path: dist/TaskOn.exe
 
 
