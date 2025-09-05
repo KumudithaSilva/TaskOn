@@ -78,6 +78,7 @@ jobs:
         run: python -m build
 
       - name: Build Windows executable with PyInstaller (include assets)
+        shell: cmd
         run: |
           pyinstaller taskon/main.py --onefile --noconsole --name TaskOnApp ^
             --add-data "taskon/assets/audio;assets/audio" ^
