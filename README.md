@@ -180,6 +180,34 @@ TaskOnApp/
 
 ---
 
+## 🔀 Git Flow Workflow
+
+The development process follows a **Git Flow** style workflow to keep development organized and efficient. Currently, it uses these branches:
+
+- 🌿 **`master`** — Stable, production-ready code (released versions)  
+- 🌱 **`task_oop`** — Main development branch for ongoing work  
+
+### Future branch structure :
+
+- ✨ **`feature/*`** — For developing new features, branched off `task_oop`  
+- 🛠️ **`release/*`** — For preparing releases, branched off `task_oop`  
+- 🩹 **`hotfix/*`** — For urgent bug fixes, branched off `master`  
+
+### Typical workflow (future plan):
+
+1. 📥 Pull the latest changes from `task_oop`  
+2. 🌟 Work on your changes (directly on `task_oop` for now)  
+3. 🔀 Open a Pull Request (PR) to merge into `task_oop`  
+4. ✅ After review and testing, merge PR into `task_oop`  
+5. 🚀 When ready for release, create a `release/*` branch from `task_oop` for final testing and polishing  
+6. 🎉 Merge `release/*` into `master` and tag the new version  
+7. ⚡ For urgent fixes, create a `hotfix/*` branch off `master`  
+8. 🔄 Merge `hotfix/*` back into both `master` and `task_oop`  
+
+This workflow helps maintain **stable releases** while supporting **safe feature development** and **quick fixes** as the project grows.
+
+---
+
 ## 💡 Inspiration
 
 >TaskOn is inspired by Francesco Cirillo’s Pomodoro Technique, designed to help people work with time instead of against it.
