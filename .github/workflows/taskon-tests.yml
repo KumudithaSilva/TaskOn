@@ -80,7 +80,7 @@ jobs:
       - name: Build Windows executable with PyInstaller (include assets)
         shell: cmd
         run: |
-          pyinstaller taskon/main.py --onefile --noconsole --name TaskOn --icon=taskon/assets/images/growing-seed.ico ^
+          pyinstaller taskon/main.py --onefile --noconsole --name TaskOn --icon=taskon/assets/images/growing-seed-main.ico ^
             --add-data "taskon/assets/audio;assets/audio" ^
             --add-data "taskon/assets/images;assets/images"
 
