@@ -1,4 +1,5 @@
 import os
+import sys
 from tkinter import PhotoImage
 
 
@@ -16,12 +17,16 @@ class ResourceLoader:
 
         Args:
             base_path: Directory path to load images from. If None, defaults
-                       to '../assets/images/' relative to this file.
+                       to 'assets/images' inside PyInstaller temp or source folder.
         """
         if base_path is None:
-            # Absolute path relative to this file
-            base_path = os.path.join(os.path.dirname(__file__), "assets/images")
-        self.base_path = os.path.abspath(base_path)  # converts to absolute path
+            if hasattr(sys, '_MEIPASS'):
+                # Running inside PyInstaller bundle
+                base_path = os.path.join(sys._MEIPASS, 'assets', 'images')
+            else:
+                # Running from source
+                base_path = os.path.join(os.path.dirname(__file__), 'assets', 'images')
+        self.base_path = os.path.abspath(base_path)
 
     # --------------------------
     # Resource Loading Methods
