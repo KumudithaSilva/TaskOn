@@ -61,14 +61,14 @@ class TaskOnApp:
         session_type = self.task_manager.next_session()
 
         if session_type == "work":
-            self.timer.remaining = self.config.WORK_MIN
+            self.timer.remaining = self.config.WORK_MIN * 60
             self.ui.update_logo(self.images["work"])
         elif session_type == "long_break":
-            self.timer.remaining = self.config.LONG_BREAK_MIN
+            self.timer.remaining = self.config.LONG_BREAK_MIN *  60
             self.ui.update_logo(self.images["long_break"])
             self.ui.add_checkmark(self.images["checkbox"])
         else:  # short_break
-            self.timer.remaining = self.config.SHORT_BREAK_MIN
+            self.timer.remaining = self.config.SHORT_BREAK_MIN * 60
             self.ui.update_logo(self.images["short_break"])
             self.ui.add_checkmark(self.images["checkbox"])
 
