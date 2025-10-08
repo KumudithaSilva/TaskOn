@@ -30,3 +30,44 @@ class TaskConfig:
         self.WORK_REPS = work_reps
         self.COUNTER_SECOND = counter_second
         self.INITIAL_VALUE = initial_value
+
+    @property
+    def work_min(self):
+        return self.WORK_MIN
+
+    @work_min.setter
+    def work_min(self, value):
+        if value < 0:
+            raise ValueError("Work minutes must be non-negative.")
+        self.WORK_MIN = value
+
+    @property
+    def short_break_min(self):
+        return self.SHORT_BREAK_MIN
+
+    @short_break_min.setter
+    def short_break_min(self, value):
+        if value < 0:
+            raise ValueError("Short break must be non-negative.")
+        self.SHORT_BREAK_MIN = value
+
+    @property
+    def long_break_min(self):
+        return self.LONG_BREAK_MIN
+
+    @long_break_min.setter
+    def long_break_min(self, value):
+        if value < 0:
+            raise ValueError("Long break must be non-negative.")
+        self.LONG_BREAK_MIN = value
+
+    @property
+    def work_reps(self):
+        return self.WORK_REPS
+
+    @work_reps.setter
+    def work_reps(self, value):
+        if value < 0:
+            raise ValueError("Work repetitions must be non-negative.")
+        self.WORK_REPS = value
+
