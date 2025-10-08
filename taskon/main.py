@@ -8,6 +8,7 @@ configures audio services, and starts the main application loop.
 from tkinter import Tk
 
 from taskon.app import TaskOnApp
+from taskon.messagebox import CustomInputDialog
 from taskon.resources import ResourceLoader
 from taskon.audio_service import PygameAudionService
 from taskon.config import TaskConfig
@@ -17,8 +18,10 @@ def main():
     """
     Initialize and run the TaskOn application.
     """
-    # Create the main application window
+    # Create the main application window and hide
     root = Tk()
+    root.withdraw()
+
     root.title("TaskOn")
     root.geometry("250x350")
     root.config(padx=5, pady=5, bg="#fdfdfd")
@@ -28,6 +31,7 @@ def main():
 
     icon_path = loader.get_resource_path("growing-seed.ico")
     root.iconbitmap(icon_path)
+
 
     images = {
         "moon": loader.load_image("clock-green.png"),
@@ -44,11 +48,29 @@ def main():
     audio = PygameAudionService()
     config = TaskConfig()
 
-    # Start the TaskOn application
-    TaskOnApp(root, images, audio, config)
+    # Ask for user input
+    dialog = CustomInputDialog(root, prompt="Enter number of study minutes:", icon_path=icon_path)
+    root.wait_window(dialog)
 
-    # Run the Tkinter main loop
-    root.mainloop()
+    value = dialog.result
+
+    if value is not None:
+        try:
+            minutes = int(value)
+            config.work_min = minutes
+
+            # Show main window
+            root.deiconify()
+
+            # Start the TaskOn application
+            TaskOnApp(root, images, audio, config)
+
+            # Run the Tkinter main loop
+            root.mainloop()
+        except ValueError:
+            raise ValueError("Invalid input. Please enter a valid number.")
+    else:
+        root.destroy()
 
 
 if __name__ == "__main__":
